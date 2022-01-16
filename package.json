@@ -1,0 +1,8 @@
+{
+  "name": "dreamyoungs_backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/woo94/dreamyoungs_backend.git",
+  "author": "woo94 <bestman21c@naver.com>",
+  "license": "MIT"
+}
