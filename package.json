@@ -4,5 +4,8 @@
   "main": "index.js",
   "repository": "https://github.com/woo94/dreamyoungs_backend.git",
   "author": "woo94 <bestman21c@naver.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
 }
