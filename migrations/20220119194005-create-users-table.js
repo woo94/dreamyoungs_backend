@@ -1,27 +1,27 @@
 'use strict';
-const { QueryInterface, DataTypes } = require('sequelize')
+const Seq = require('sequelize')
 
 module.exports = {
-  async up(queryInterface = new QueryInterface(), Sequelize = S) {
+  async up(queryInterface = new Seq.QueryInterface(), Sequelize = Seq) {
     await queryInterface.createTable('users', {
       index: {
-        type: DataTypes.BIGINT.UNSIGNED,
+        type: Sequelize.DataTypes.BIGINT.UNSIGNED,
         autoIncrement: true,
         primaryKey: true
       },
       userName: {
-        type: DataTypes.CHAR(64)
+        type: Sequelize.DataTypes.CHAR(64)
       },
       userDesc: {
-        type: DataTypes.TEXT
+        type: Sequelize.DataTypes.TEXT
       },
       hasCat: {
-        type: DataTypes.BOOLEAN
+        type: Sequelize.DataTypes.BOOLEAN
       }
     })
   },
 
-  async down(queryInterface = new QueryInterface(), Sequelize) {
+  async down(queryInterface = new Seq.QueryInterface(), Sequelize) {
     await queryInterface.dropTable('users')
   }
 };
