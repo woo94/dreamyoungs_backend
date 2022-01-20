@@ -26,7 +26,9 @@ router.route('/')
      * @apiSuccess {Number} users.index User's index
      * @apiSuccess {String} users.userName User's name
      * @apiSuccess {String} users.userDesc User's description
-     * @apiSuccess {Boolean} users.hasCat Whether user has a cat
+     * @apiSuccess {Boolean} users.hasCat <code>true</code> if user has a cat. <code>false</code> if not
+     * @apiExample {curl} cURL example
+     * curl -i http://localhost:8080/user
      */
     .get(async (req, res) => {
         const users = await User.findAll()
@@ -42,14 +44,17 @@ router.route('/')
      * @apiSuccess {Number} index User's index
      * @apiSuccess {String} userName User's name
      * @apiSuccess {String} userDesc User's description
-     * @apiSuccess {Boolean} hasCat Whether user has a cat
+     * @apiSuccess {Boolean} hasCat <code>true</code> if user has a cat. <code>false</code> if not
+     * @apiExample {curl} cURL example
+     * curl -H "Content-Type: application/json" -i -X POST -d '{"userName": "woo", "userDesc": "taking an assignment test", "hasCat": false}' http://localhost:8080/user
      */
     .post(async (req, res) => {
         /**
          * @type {User}
          */
         const requestBody = req.body
-        const user = await User.create(req.body)
+        console.log(requestBody)
+        const user = await User.create(requestBody)
         res.json(user)
     })
 
@@ -59,7 +64,9 @@ router.route('/:userIndex')
      * @apiGroup User
      * @apiName DeleteUser
      * @apiVersion 0.1.0
-     * @apiSuccess (200) {String} result "success"
+     * @apiSuccess (200) {String} result <code>"success"</code>
+     * @apiExample {curl} cURL example
+     * curl -i -X DELETE http://localhost:8080/user/2
      */
     .delete(async (req, res) => {
         const userIndex = +req.params.userIndex
@@ -82,7 +89,9 @@ router.route('/:userIndex/hasCat')
      * @apiGroup User
      * @apiName GetUserHasCat
      * @apiVersion 0.1.0
-     * @apiSuccess (200) {Boolean} hasCat
+     * @apiSuccess (200) {Boolean} hasCat <code>true</code> if user has a cat. <code>false</code> if not
+     * @apiExample {curl} cURL example
+     * curl -i http://localhost:8080/user/1/hasCat
      */
     .get(async (req, res) => {
         const userIndex = +req.params.userIndex
@@ -101,13 +110,16 @@ router.route('/:userIndex/hasCat')
      * @apiGroup User
      * @apiName UpdateUserHasCat
      * @apiVersion 0.1.0
-     * @apiSuccess (200) {Boolean} hasCat 
+     * @apiSuccess (200) {Boolean} hasCat <code>true</code> if user has a cat. <code>false</code> if not
+     * @apiExample {curl} cURL example
+     * curl -i -H "Content-Type: application/json" -X POST -d '{"hasCat": true}' http://localhost:8080/user/1/hasCat
      */
     .post(async (req, res) => {
         /**
-         * @type {{ index: number, hasCat: boolean}}
+         * @type {{ hasCat: boolean}}
          */
         const requestBody = req.body
+        const userIndex = +req.params.userIndex
         const user = await User.update(
             {
                 hasCat: requestBody.hasCat
@@ -115,7 +127,7 @@ router.route('/:userIndex/hasCat')
             {
                 where: {
                     index: {
-                        [Op.eq]: requestBody.index
+                        [Op.eq]: userIndex
                     }
                 }
             }
