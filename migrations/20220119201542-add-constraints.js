@@ -6,7 +6,7 @@ module.exports = {
   async up(queryInterface = new Seq.QueryInterface(), Sequelize = Seq) {
     await queryInterface.bulkDelete('users', {
       userName: {
-        [Op.eq]: null
+        [Seq.Op.eq]: null
       }
     })
     await queryInterface.changeColumn('users', 'userName', {
