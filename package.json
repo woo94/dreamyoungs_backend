@@ -6,6 +6,36 @@
   "author": "woo94 <bestman21c@naver.com>",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.2"
+    "apidoc": "^0.50.3",
+    "chance": "^1.1.8",
+    "dotenv": "^14.2.0",
+    "express": "^4.17.2",
+    "mysql2": "^2.3.3",
+    "nodemon": "^2.0.15",
+    "sequelize": "^6.13.0",
+    "sequelize-cli": "^6.4.1"
+  },
+  "scripts": {
+    "nodemon": "nodemon index.js",
+    "create:db": "npx sequelize-cli db:create",
+    "create:apidoc": "apidoc -i routes -o apidoc",
+    "serve:apidoc": "serve apidoc"
+  },
+  "apidoc": {
+    "name": "User",
+    "version": "0.1.0",
+    "description": "handle user related apis",
+    "url": "http://localhost:8080",
+    "order": [
+      "User",
+      "GetUser",
+      "CreateUser",
+      "DeleteUser",
+      "GetUserHasCat",
+      "UpdateUserHasCat"
+    ]
+  },
+  "devDependencies": {
+    "serve": "^13.0.2"
   }
 }
