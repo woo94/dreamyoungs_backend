@@ -17,16 +17,23 @@
   },
   "scripts": {
     "nodemon": "nodemon index.js",
+    "create:localDb": "docker run --name mysql-dev -dp 3306:3306 -e MYSQL_ROOT_PASSWORD=secret mysql --default-authentication-plugin=mysql_native_password",
     "create:db": "npx sequelize-cli db:create",
     "create:apidoc": "apidoc -i routes -o apidoc",
-    "serve:apidoc": "serve apidoc"
+    "serve:apidoc": "serve apidoc",
+    "migrate:db": "npx sequelize-cli db:migrate",
+    "seed:db": "npx sequelize-cli db:seed:all",
+    "init": "npm run create:db && npm run migrate:db && npm run seed:db && node index.js",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down"
   },
   "apidoc": {
-    "name": "User",
+    "name": "Dreamyoungs assignment test api documentation",
     "version": "0.1.0",
-    "description": "handle user related apis",
+    "description": "",
     "url": "http://localhost:8080",
     "order": [
+      "Test",
       "User",
       "GetUser",
       "CreateUser",
