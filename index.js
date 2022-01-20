@@ -3,6 +3,7 @@ const app = express()
 const testRouter = require('./routes/test')
 const userRouter = require('./routes/user')
 
+app.use(express.json())
 app.use('/', testRouter)
 app.use('/user', userRouter)
 
