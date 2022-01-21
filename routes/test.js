@@ -3,6 +3,12 @@
 const express = require("express")
 const router = express.Router()
 
+router.use((req, res, next) => {
+    res.setHeader('Content-Type', 'text/plain')
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+    next()
+})
+
 /**
  * @api {get} /test1 Test endpoint1
  * @apiGroup Test
