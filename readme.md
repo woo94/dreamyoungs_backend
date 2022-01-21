@@ -20,6 +20,10 @@ Backend, Frontend, API documentation
 
 #### Frontend
 `npm run test-browser` command를 통해 [http://localhost:3000](http://localhost:3000)에서 API playground를 사용 할 수 있습니다.
+이 command는 serve를 사용하므로 다음의 command를 통해 먼저 serve를 설치해주도록 합니다.
+```
+npm install -g serve
+```
 
 
 #### API documentation
