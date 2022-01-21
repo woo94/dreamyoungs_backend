@@ -5,7 +5,7 @@
 ### 프로젝트 소개
 이 프로젝트는 총 3가지 파트로 구성되어 있습니다: 
 
-Backend, Frontend, API documentation
+1. Backend, 2. Frontend, 3. API documentation
 
 준비물: 
 
@@ -14,11 +14,11 @@ Backend, Frontend, API documentation
 - 다음의 port은 다른 process에서 사용중이 아니어야 합니다(3000, 8080)
 
 
-#### Backend
+#### **1. Backend**
 `npm run docker:up` command를 통해 docker-compose.yaml 파일에 정의된 application을 실행시킵니다. 
 
 
-#### Frontend
+#### **2. Frontend**
 `npm run test-browser` command를 통해 [http://localhost:3000](http://localhost:3000)에서 API playground를 사용 할 수 있습니다.
 이 command는 serve를 사용하므로 다음의 command를 통해 먼저 serve를 설치해주도록 합니다.
 ```
@@ -26,5 +26,5 @@ npm install -g serve
 ```
 
 
-#### API documentation
+#### **3. API documentation**
 project directory에서 apidoc폴더에 있는 index.html을 열어서 사용이 가능합니다. 
