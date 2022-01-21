@@ -27,7 +27,7 @@
     "init": "npm run create:apidoc && npm run create:db && npm run migrate:db && npm run seed:db && node index.js",
     "docker:up": "docker-compose up -d --build",
     "docker:down": "docker-compose down",
-    "test-browser": "cd test-browser && npm install && npm run start"
+    "test-browser": "serve -s ./test-browser/build -l 3000"
   },
   "apidoc": {
     "name": "Dreamyoungs assignment test api documentation",
