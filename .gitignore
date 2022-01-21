@@ -3,3 +3,4 @@ yarn.lock
 package-lock.json
 *-error.log
 # apidoc/
+.DS_Store
