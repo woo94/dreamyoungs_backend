@@ -18,6 +18,9 @@
 `npm run docker:up` command를 통해 docker-compose.yaml 파일에 정의된 application을 실행시킵니다. 
 
 
+*20명의 user가 seed file에 의해 초기화 됩니다.*
+
+
 #### **2. Frontend**
 `npm run test-browser` command를 통해 [http://localhost:3000](http://localhost:3000)에서 API playground를 사용 할 수 있습니다.
 이 command는 serve를 사용하므로 다음의 command를 통해 먼저 serve를 설치해주도록 합니다.
