@@ -8,6 +8,7 @@
   "dependencies": {
     "apidoc": "^0.50.3",
     "chance": "^1.1.8",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^14.2.0",
     "express": "^4.17.2",
     "mysql2": "^2.3.3",
@@ -20,12 +21,13 @@
     "create:localDb": "docker run --name mysql-dev -dp 3306:3306 -e MYSQL_ROOT_PASSWORD=secret mysql --default-authentication-plugin=mysql_native_password",
     "create:db": "npx sequelize-cli db:create",
     "create:apidoc": "apidoc -i routes -o apidoc",
-    "serve:apidoc": "serve apidoc",
+    "serve:apidoc": "serve -p 5000 apidoc",
     "migrate:db": "npx sequelize-cli db:migrate",
     "seed:db": "npx sequelize-cli db:seed:all",
-    "init": "npm run create:db && npm run migrate:db && npm run seed:db && node index.js",
+    "init": "npm run create:apidoc && npm run create:db && npm run migrate:db && npm run seed:db && node index.js",
     "docker:up": "docker-compose up -d --build",
-    "docker:down": "docker-compose down"
+    "docker:down": "docker-compose down",
+    "test-browser": "cd test-browser && npm install && npm run start"
   },
   "apidoc": {
     "name": "Dreamyoungs assignment test api documentation",
