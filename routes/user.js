@@ -138,18 +138,16 @@ router.route('/:userIndex/hasCat')
             res.status(400).json({
                 result: 'UserNotFound'
             })
+            return
         }
-        else {
-            res.json(user)
-        }
-
+        res.json(user)
     })
     /**
      * @api {post} /user/:userIndex/hasCat Update hasCat of user
      * @apiGroup User
      * @apiName UpdateUserHasCat
      * @apiVersion 0.1.0
-     * @apiSuccess (200) {Boolean} hasCat <code>true</code> if user has a cat. <code>false</code> if not
+     * @apiSuccess (200) {String} result <code>success</code>
      * @apiExample {curl} cURL example
      * curl -i -H "Content-Type: application/json" -X POST -d '{"hasCat": true}' http://localhost:8080/user/1/hasCat
      * @apiError UserNotFound
