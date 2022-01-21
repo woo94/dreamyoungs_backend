@@ -16,9 +16,16 @@ const User = require("../models/user")(sequelize)
 
 const router = express.Router()
 
+router.use((req, res, next) => {
+    res.setHeader('Content-Type', 'application/json')
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+    res.setHeader('Access-Control-Allow-Credentials', 'true')
+    next()
+})
+
 router.route('/')
     /**
-     * @api {get} /user Retreive all users 
+     * @api {get} /user List all users 
      * @apiGroup User
      * @apiName GetUser
      * @apiVersion 0.1.0
@@ -47,15 +54,22 @@ router.route('/')
      * @apiSuccess {Boolean} hasCat <code>true</code> if user has a cat. <code>false</code> if not
      * @apiExample {curl} cURL example
      * curl -H "Content-Type: application/json" -i -X POST -d '{"userName": "woo", "userDesc": "taking an assignment test", "hasCat": false}' http://localhost:8080/user
+     * @apiError ValidationError Request form unappropriate
      */
     .post(async (req, res) => {
         /**
          * @type {User}
          */
         const requestBody = req.body
-        console.log(requestBody)
-        const user = await User.create(requestBody)
-        res.json(user)
+        try {
+            const user = await User.create(requestBody)
+            res.json(user)
+        }
+        catch (e) {
+            res.status(400).json({
+                result: e.message
+            })
+        }
     })
 
 router.route('/:userIndex')
@@ -67,20 +81,36 @@ router.route('/:userIndex')
      * @apiSuccess (200) {String} result <code>"success"</code>
      * @apiExample {curl} cURL example
      * curl -i -X DELETE http://localhost:8080/user/2
+     * @apiError UserNotFound
      */
     .delete(async (req, res) => {
         const userIndex = +req.params.userIndex
-        const deleteCount = await User.destroy({
-            where: {
-                index: {
-                    [Op.eq]: userIndex
+        try {
+            const deleteCount = await User.destroy({
+                where: {
+                    index: {
+                        [Op.eq]: userIndex
+                    }
                 }
+            })
+
+            if (deleteCount === 0) {
+                res.status(404).json({
+                    result: 'UserNotFound'
+                })
             }
-        })
-        console.log(userIndex, deleteCount)
-        res.status(200).json({
-            result: 'success'
-        })
+            else {
+                res.status(200).json({
+                    result: 'success'
+                })
+            }
+        }
+        catch (e) {
+            res.status(400).json({
+                result: e.message
+            })
+        }
+
     })
 
 router.route('/:userIndex/hasCat')
@@ -92,6 +122,7 @@ router.route('/:userIndex/hasCat')
      * @apiSuccess (200) {Boolean} hasCat <code>true</code> if user has a cat. <code>false</code> if not
      * @apiExample {curl} cURL example
      * curl -i http://localhost:8080/user/1/hasCat
+     * @apiError UserNotFound 
      */
     .get(async (req, res) => {
         const userIndex = +req.params.userIndex
@@ -103,7 +134,15 @@ router.route('/:userIndex/hasCat')
             },
             attributes: ['hasCat']
         })
-        res.json(user)
+        if (user === null) {
+            res.status(400).json({
+                result: 'UserNotFound'
+            })
+        }
+        else {
+            res.json(user)
+        }
+
     })
     /**
      * @api {post} /user/:userIndex/hasCat Update hasCat of user
@@ -113,6 +152,7 @@ router.route('/:userIndex/hasCat')
      * @apiSuccess (200) {Boolean} hasCat <code>true</code> if user has a cat. <code>false</code> if not
      * @apiExample {curl} cURL example
      * curl -i -H "Content-Type: application/json" -X POST -d '{"hasCat": true}' http://localhost:8080/user/1/hasCat
+     * @apiError UserNotFound
      */
     .post(async (req, res) => {
         /**
@@ -120,7 +160,22 @@ router.route('/:userIndex/hasCat')
          */
         const requestBody = req.body
         const userIndex = +req.params.userIndex
-        const user = await User.update(
+        const user = await User.findOne({
+            where: {
+                index: {
+                    [Op.eq]: userIndex
+                }
+            }
+        })
+
+        if (user === null) {
+            res.status(404).json({
+                result: 'UserNotFound'
+            })
+            return
+        }
+
+        await User.update(
             {
                 hasCat: requestBody.hasCat
             },
@@ -132,7 +187,9 @@ router.route('/:userIndex/hasCat')
                 }
             }
         )
-        res.json(user)
+        res.status(200).json({
+            result: 'success'
+        })
     })
 
 module.exports = router
